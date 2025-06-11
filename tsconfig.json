@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@varel-web/*": ["./src/*"]
+      "@varel-web/*": ["./src/*"],
+      "@varel-web/public/assets/*": ["./public/assets/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
