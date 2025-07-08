@@ -22,7 +22,7 @@ const HomePage = () => {
             Varelandito Caesar Wahyu
           </h3>
           <p className="italic text-[#767676] text-base my-7">
-            Software Engineer based in Jakarta and happy to travel all the World
+            Software Engineer based in Jakarta, Indonesia and happy to travel all the World
             to capture photos.
           </p>
           {/* Social Icons */}

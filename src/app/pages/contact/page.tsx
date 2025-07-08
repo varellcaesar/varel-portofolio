@@ -2,7 +2,7 @@
 
 const ContactPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-22 md:px-16 w-full">
+    <div className="min-h-screen px-4 py-22 md:px-16 w-full">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold mb-2">Contact</h1>
