@@ -2,7 +2,6 @@
 
 import { ProfileImage } from "@varel-web/components";
 import {
-  FaFacebookF,
   FaInstagram,
   FaDiscord,
   FaXTwitter,
