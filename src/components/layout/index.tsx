@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Bars3Icon } from "@heroicons/react/16/solid";
 import { Toaster } from "react-hot-toast";
 import Sidebar from "../sidebar";
+import CustomCursor from "../custom-cursor";
 
 type Props = {
   children: React.ReactNode;
@@ -33,6 +34,8 @@ const ClientLayout = ({ children }: Props) => {
           <Bars3Icon className="h-6 w-6 text-gray-800" />
         </button>
       </header>
+
+      <CustomCursor />
 
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
