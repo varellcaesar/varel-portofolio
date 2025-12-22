@@ -34,11 +34,42 @@ const HomePage = () => {
           </p>
 
           <div className="flex justify-center md:justify-start gap-5 mt-4 text-gray-700 text-lg md:text-xl">
-            <FaFacebookF />
-            <FaXTwitter />
-            <FaInstagram />
-            <FaDiscord />
-            <FaLinkedin />
+            <a
+              href={process.env.LINK_TWITTER}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="transition-colors hover:text-black"
+            >
+              <FaXTwitter />
+            </a>
+            <a
+              href={process.env.LINK_TWITTER}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="transition-colors hover:text-black"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href={process.env.LINK_DISCORD}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="transition-colors hover:text-black"
+            >
+              <FaDiscord />
+            </a>
+            <a
+              href={process.env.LINK_LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="transition-colors hover:text-black"
+            >
+              <FaLinkedin />
+            </a>
           </div>
         </div>
       </div>
