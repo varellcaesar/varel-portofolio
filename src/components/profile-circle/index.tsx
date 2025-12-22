@@ -3,7 +3,6 @@
 import IMAGES from "@varel-web/public/assets/images";
 import { motion } from "framer-motion";
 
-// Sama basePaths
 const basePaths = [
   "M65,-45C78,-32,82,-12,79,6C76,24,66,40,52,52C38,64,20,72,0,75C-20,78,-40,75,-56,68C-72,61,-84,50,-88,36C-92,22,-88,6,-81,-12C-74,-30,-64,-50,-48,-63C-32,-76,-12,-82,8,-85C28,-88,56,-88,65,-45Z",
   "M48,-68C62,-55,66,-35,64,-17C62,1,54,17,44,30C34,43,22,53,8,58C-6,63,-22,63,-36,58C-50,53,-62,43,-70,30C-78,17,-82,1,-80,-17C-78,-35,-70,-55,-56,-68C-42,-81,-21,-87,0,-87C21,-87,42,-81,48,-68Z",
@@ -20,7 +19,6 @@ const basePaths = [
 const ProfileImage = () => {
   return (
     <div className="min-w-[400px] min-h-[400px] relative">
-      {/* Layer 1: Border transparan */}
       <svg
         viewBox="0 0 200 200"
         className="absolute inset-0 w-full h-full z-0"
@@ -54,7 +52,6 @@ const ProfileImage = () => {
         />
       </svg>
 
-      {/* Layer 2: Gambar utama */}
       <svg
         viewBox="0 0 200 200"
         className="absolute inset-0 w-full h-full z-10"

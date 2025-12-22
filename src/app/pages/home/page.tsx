@@ -11,22 +11,29 @@ import {
 
 const HomePage = () => {
   return (
-    <main className="flex-1 flex items-center justify-center p-10 w-full">
-      <div className="flex flex-col md:flex-row items-center gap-10">
-        {/* Profile Image with Animated Border */}
+    <main className="flex-1 flex items-center justify-center px-4 py-12 md:p-10 w-full">
+      <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
         <ProfileImage />
 
-        {/* Profile Details */}
         <div className="text-center md:text-left">
-          <h3 className="uppercase text-black font-extrabold text-[55px] leading-none">
+          <h3
+            className="
+              uppercase font-extrabold text-black leading-tight
+              text-3xl
+              sm:text-4xl
+              md:text-[42px]
+              lg:text-[55px]
+            "
+          >
             Varelandito Caesar Wahyu
           </h3>
-          <p className="italic text-[#767676] text-base my-7">
-            Software Engineer based in Jakarta, Indonesia and happy to travel all the World
-            to capture photos.
+
+          <p className="italic text-[#767676] text-sm md:text-base my-5 md:my-7 max-w-md mx-auto md:mx-0">
+            Software Engineer based in Jakarta, Indonesia and happy to travel
+            all the world to capture photos.
           </p>
-          {/* Social Icons */}
-          <div className="flex justify-center md:justify-start space-x-5 mt-4 text-gray-700 text-xl">
+
+          <div className="flex justify-center md:justify-start gap-5 mt-4 text-gray-700 text-lg md:text-xl">
             <FaFacebookF />
             <FaXTwitter />
             <FaInstagram />
