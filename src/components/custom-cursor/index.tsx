@@ -1,62 +1,57 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
 
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const circle = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const dot = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const animationRef = useRef<number | undefined>(undefined);
+  // Gunakan ref, jangan pakai useState
+  const mouse = useRef({ x: 0, y: 0 });
+  const circle = useRef({ x: 0, y: 0 });
+  const dot = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Update position of mouse
-      setMouse({ x: e.clientX, y: e.clientY });
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
     };
 
     const animate = () => {
-      // Cicrle follow mouse with trailing effect more smooth
-      const circleEasing = 0.08; // Lebih lambat untuk smoothness
-      circle.current.x += (mouse.x - circle.current.x) * circleEasing;
-      circle.current.y += (mouse.y - circle.current.y) * circleEasing;
-
-      // Dot following mouse with trailing effect
-      const dotEasing = 0.12; // Sedikit lebih cepat dari circle
-      const targetDotX = mouse.x + (mouse.x - dot.current.x) * dotEasing;
-      const targetDotY = mouse.y + (mouse.y - dot.current.y) * dotEasing;
-
-      // Smooth interpolation dot
-      dot.current.x += (targetDotX - dot.current.x) * dotEasing;
-      dot.current.y += (targetDotY - dot.current.y) * dotEasing;
-
-      // Make sure the dot not overide the circle
-      const deltaX = dot.current.x - circle.current.x;
-      const deltaY = dot.current.y - circle.current.y;
-      const distanceFromCircleCenter = Math.sqrt(
-        deltaX * deltaX + deltaY * deltaY
-      );
+      // Easing values
+      const circleEasing = 0.08;
+      const dotEasing = 0.12;
       const maxRadius = 11;
 
-      if (distanceFromCircleCenter > maxRadius) {
-        const angle = Math.atan2(deltaY, deltaX);
+      // Update circle position (smooth follow)
+      circle.current.x += (mouse.current.x - circle.current.x) * circleEasing;
+      circle.current.y += (mouse.current.y - circle.current.y) * circleEasing;
 
-        const constraintEasing = 0.3;
+      // Update dot (faster but still smooth)
+      dot.current.x += (mouse.current.x - dot.current.x) * dotEasing;
+      dot.current.y += (mouse.current.y - dot.current.y) * dotEasing;
+
+      // Constrain dot within a radius from circle
+      const dx = dot.current.x - circle.current.x;
+      const dy = dot.current.y - circle.current.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > maxRadius) {
+        const angle = Math.atan2(dy, dx);
         const targetX = circle.current.x + Math.cos(angle) * maxRadius;
         const targetY = circle.current.y + Math.sin(angle) * maxRadius;
 
-        dot.current.x += (targetX - dot.current.x) * constraintEasing;
-        dot.current.y += (targetY - dot.current.y) * constraintEasing;
+        dot.current.x += (targetX - dot.current.x) * 0.3;
+        dot.current.y += (targetY - dot.current.y) * 0.3;
       }
 
+      // Apply transform (translate3d helps GPU acceleration)
       if (circleRef.current) {
         circleRef.current.style.transform = `translate3d(${
           circle.current.x - 16
         }px, ${circle.current.y - 16}px, 0)`;
       }
-
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${dot.current.x - 4}px, ${
           dot.current.y - 4
@@ -65,16 +60,18 @@ const CustomCursor = () => {
 
       animationRef.current = requestAnimationFrame(animate);
     };
-    document.addEventListener("mousemove", handleMouseMove);
+
+    // Event listener dengan passive true → Safari lebih ringan
+    document.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    // Start animation
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [mouse]);
+  }, []);
 
   return (
     <div className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:block">
@@ -89,4 +86,5 @@ const CustomCursor = () => {
     </div>
   );
 };
+
 export default CustomCursor;

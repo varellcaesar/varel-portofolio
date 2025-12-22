@@ -1,73 +1,106 @@
 "use client";
 
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: "easeOut",
+    },
+  },
+};
+
 const AboutPage = () => {
   return (
     <div className="min-h-screen px-4 py-22 md:px-16">
-      <div className="max-w-5xl mx-auto">
-        {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-22">
-          About this site
-        </h1>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="max-w-5xl mx-auto"
+      >
+        <motion.h1
+          variants={item}
+          className="text-3xl md:text-4xl font-extrabold mb-22"
+        >
+          About
+        </motion.h1>
 
-        {/* Description */}
-        <p className="text-gray-700 mb-10 leading-relaxed">
-          {
-            "Tokyo is an independent publication launched in July 2024 by Jamie Larson. If you subscribe today, you'll get full access to the website as well as email newsletters about new content when it's available. Your subscription makes this site possible, and allows Tokyo to continue to exist. Thank you!"
-          }
-        </p>
+        <motion.p
+          variants={item}
+          className="text-gray-800 mb-12 leading-relaxed text-lg"
+        >
+          I’m a software engineer who builds products with intention. I focus on
+          crafting reliable systems, clean user experiences, and scalable
+          architectures not just features that work today, but systems that
+          last.
+        </motion.p>
 
-        {/* Sections */}
-        <div className="space-y-10">
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Access all areas</h2>
-            <p className="text-gray-700">
-              {
-                "By signing up, you'll get access to the full archive of everything that's been published before and everything that's still to come. Your very own private library."
-              }
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-semibold mb-2">
-              Fresh content, delivered
+        <motion.div variants={container} className="space-y-12">
+          <motion.div variants={item}>
+            <h2 className="text-lg font-semibold mb-3">
+              Engineering, not just coding
             </h2>
-            <p className="text-gray-700">
-              Stay up to date with new content sent straight to your inbox! No
-              more worrying about whether you missed something because of a
-              pesky algorithm or news feed.
+            <p className="text-gray-700 leading-relaxed">
+              Writing code is only part of the job. I care about how things fit
+              together data flow, boundaries between systems, performance
+              trade offs, and long term maintainability. My goal is to build
+              software that stays readable, predictable, and scalable as it
+              grows.
             </p>
-          </div>
+          </motion.div>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Meet people like you</h2>
-            <p className="text-gray-700">
-              Join a community of other subscribers who share the same
-              interests.
+          <motion.div variants={item}>
+            <h2 className="text-lg font-semibold mb-3">
+              Frontend with a system mindset
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              I work heavily on the frontend, but I don’t treat it as “just UI”.
+              I think in terms of architecture, state management, data
+              contracts, and developer experience. A good interface is backed by
+              a solid system and I enjoy designing both.
             </p>
-          </div>
-        </div>
+          </motion.div>
 
-        {/* Divider */}
-        <hr className="my-10 border-gray-300" />
+          <motion.div variants={item}>
+            <h2 className="text-lg font-semibold mb-3">
+              Growth, ownership, and impact
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              I’m driven by ownership and impact. I like taking responsibility,
+              improving existing systems, and helping teams move faster without
+              sacrificing quality. I’m always learning not to chase trends,
+              but to sharpen fundamentals and decision making.
+            </p>
+          </motion.div>
+        </motion.div>
 
-        {/* Footer */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Start your own thing</h2>
-          <p className="text-gray-700">
-            Enjoying the experience? Get started for free and set up your very
-            own subscription business using{" "}
-            <a
-              href="https://ghost.org"
-              className="underline font-medium"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ghost
-            </a>
-            , the same platform that powers this website.
+        <motion.hr variants={item} className="my-12 border-gray-300" />
+
+        <motion.div variants={item}>
+          <h2 className="text-lg font-semibold mb-3">This space</h2>
+          <p className="text-gray-700 leading-relaxed">
+            This site is a snapshot of how I think and build. It’s where I share
+            selected work, experiments, and ideas around software engineering,
+            product, and systems. Simple, intentional, and evolving just like
+            the software I aim to build.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

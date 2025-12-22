@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { CustomCursor, Sidebar } from "@varel-web/components";
+import { Toaster } from "react-hot-toast";
 
 const montserratFont = Montserrat({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
         <div className="min-h-screen bg-gray-50 text-[#1F2937] flex">
           <Sidebar />
 
-          {/* Main Content */}
+          <Toaster position="top-right" />
           {children}
         </div>
       </body>
