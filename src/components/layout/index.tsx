@@ -26,9 +26,9 @@ const ClientLayout = ({ children }: Props) => {
             transition-shadow duration-200
         "
       >
-        <span className="text-base font-bold uppercase tracking-wide text-[#1F2937]">
+        <span className="text-lg font-bold uppercase tracking-wide text-[#1F2937]">
           Varel
-          <span className="text-xs mt-2 ml-[4px]">©</span>
+          <span className="text-xs mt-2">©</span>
         </span>
         <button onClick={() => setSidebarOpen(true)}>
           <Bars3Icon className="h-6 w-6 text-gray-800" />
