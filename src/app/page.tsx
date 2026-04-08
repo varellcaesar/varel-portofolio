@@ -22,12 +22,12 @@ export default function RootPage() {
         <ProjectPage />
       </section>
 
-      <section id="contact" className={sectionClassName}>
-        <ContactPage />
-      </section>
-
       <section id="about" className={sectionClassName}>
         <AboutPage />
+      </section>
+
+      <section id="contact" className={sectionClassName}>
+        <ContactPage />
       </section>
     </div>
   );

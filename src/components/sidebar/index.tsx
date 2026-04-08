@@ -13,8 +13,8 @@ const navigationItems = [
   { href: "/#home", label: "Home", id: "home" },
   { href: "/#experience", label: "Experience", id: "experience" },
   { href: "/#project", label: "Project", id: "project" },
-  { href: "/#contact", label: "Contact", id: "contact" },
   { href: "/#about", label: "About", id: "about" },
+  { href: "/#contact", label: "Contact", id: "contact" },
 ];
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
