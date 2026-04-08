@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "@varel-web/components";
@@ -20,11 +21,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" className={montserratFont.variable}>
       <body>
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
