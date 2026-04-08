@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { EnvelopeIcon, XMarkIcon } from "@heroicons/react/16/solid";
 
@@ -124,19 +125,19 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </button>
 
         <span className="flex mb-16">
-          <a
+          <Link
             href="/#home"
             onClick={onClose}
             className="text-2xl md:text-3xl font-bold uppercase tracking-[2px] text-[#1F2937]"
           >
             Varel
-          </a>
+          </Link>
           <span className="text-base mt-2">©</span>
         </span>
 
         <nav className="flex flex-col gap-3 text-base text-[#767676] font-medium">
           {navigationItems.map(({ href, label, id }) => (
-            <a
+            <Link
               key={label}
               href={href}
               onClick={onClose}
@@ -155,7 +156,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 }`}
               />
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
 

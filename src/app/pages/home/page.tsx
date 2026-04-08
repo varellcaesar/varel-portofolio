@@ -8,7 +8,11 @@ import {
 } from "react-icons/fa6";
 
 const HomePage = () => {
-  const socialLinks = [
+  const socialLinksData: Array<{
+    href?: string;
+    label: string;
+    icon: ReactNode;
+  }> = [
     {
       href: process.env.LINK_TWITTER,
       label: "X / Twitter",
@@ -29,9 +33,10 @@ const HomePage = () => {
       label: "LinkedIn",
       icon: <FaLinkedin />,
     },
-  ].filter(
-    (link): link is { href: string; label: string; icon: ReactNode } =>
-      Boolean(link.href)
+  ];
+
+  const socialLinks = socialLinksData.flatMap((link) =>
+    link.href ? [{ ...link, href: link.href }] : []
   );
 
   return (
