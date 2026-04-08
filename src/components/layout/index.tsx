@@ -14,7 +14,7 @@ const ClientLayout = ({ children }: Props) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-[#1F2937] flex flex-col md:flex-row">
+    <div className="h-screen bg-gray-50 text-[#1F2937] flex flex-col md:flex-row overflow-hidden">
       <header
         className="
             md:hidden
@@ -39,7 +39,12 @@ const ClientLayout = ({ children }: Props) => {
 
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {children}
+      <main
+        data-scroll-container="true"
+        className="flex-1 min-h-0 overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      >
+        {children}
+      </main>
 
       <Toaster position="top-right" />
     </div>

@@ -27,3 +27,110 @@ body {
   color: var(--foreground);
   font-family: "Montserrat";
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatingBlob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.06);
+  }
+}
+
+@keyframes floatingBlobAlt {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(12px, 14px, 0) scale(0.96);
+  }
+}
+
+@keyframes iconBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulseLine {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.18);
+  }
+}
+
+.hero-fade-up {
+  opacity: 0;
+  animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-scale-in {
+  opacity: 0;
+  animation: heroScaleIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-delay-1 {
+  animation-delay: 0.12s;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.24s;
+}
+
+.hero-delay-3 {
+  animation-delay: 0.36s;
+}
+
+.hero-blob-a {
+  animation: floatingBlob 10s ease-in-out infinite;
+}
+
+.hero-blob-b {
+  animation: floatingBlobAlt 12s ease-in-out infinite;
+}
+
+.hero-social-link:hover {
+  animation: iconBob 0.45s ease-out;
+}
+
+.hero-scroll-line {
+  transform-origin: center;
+  animation: pulseLine 1.8s ease-in-out infinite;
+}

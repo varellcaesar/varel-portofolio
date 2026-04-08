@@ -1,15 +1,104 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { EnvelopeIcon, XMarkIcon } from "@heroicons/react/16/solid";
-import PAGE_NAME from "@varel-web/constants/page_name";
 
 type SidebarProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
+const navigationItems = [
+  { href: "/#home", label: "Home", id: "home" },
+  { href: "/#experience", label: "Experience", id: "experience" },
+  { href: "/#project", label: "Project", id: "project" },
+  { href: "/#contact", label: "Contact", id: "contact" },
+  { href: "/#about", label: "About", id: "about" },
+];
+
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector(
+      '[data-scroll-container="true"]'
+    );
+
+    if (!(scrollContainer instanceof HTMLElement)) {
+      return;
+    }
+
+    const sections = navigationItems
+      .map(({ id }) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
+
+    const syncWithHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        setActiveSection(hash);
+      }
+    };
+
+    syncWithHash();
+
+    const updateActiveSection = () => {
+      if (sections.length === 0) {
+        return;
+      }
+
+      const containerTop = scrollContainer.getBoundingClientRect().top;
+      const focusLine = containerTop + scrollContainer.clientHeight * 0.35;
+
+      let closestSection = sections[0];
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      sections.forEach((section) => {
+        const { top } = section.getBoundingClientRect();
+        const distance = Math.abs(top - focusLine);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestSection = section;
+        }
+      });
+
+      setActiveSection((currentSection) => {
+        if (currentSection === closestSection.id) {
+          return currentSection;
+        }
+
+        return closestSection.id;
+      });
+    };
+
+    updateActiveSection();
+
+    window.addEventListener("hashchange", syncWithHash);
+    scrollContainer.addEventListener("scroll", updateActiveSection, {
+      passive: true,
+    });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("hashchange", syncWithHash);
+      scrollContainer.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [setActiveSection]);
+
+  useEffect(() => {
+    if (!activeSection) {
+      return;
+    }
+
+    const nextHash = `#${activeSection}`;
+    if (window.location.hash === nextHash) {
+      return;
+    }
+
+    window.history.replaceState(null, "", `/${nextHash}`);
+  }, [activeSection]);
+
   return (
     <>
       <div
@@ -26,7 +115,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           w-[280px] bg-white
           flex flex-col px-10 pb-10 pt-24
           transform transition-transform duration-300 ease-out
-          md:static md:translate-x-0 md:w-[320px] md:min-h-screen md:pt-40 md:px-20
+          md:static md:h-screen md:translate-x-0 md:w-[320px] md:pt-40 md:px-20 md:shrink-0
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
@@ -35,32 +124,38 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </button>
 
         <span className="flex mb-16">
-          <Link
-            href="/"
+          <a
+            href="/#home"
             onClick={onClose}
             className="text-2xl md:text-3xl font-bold uppercase tracking-[2px] text-[#1F2937]"
           >
             Varel
-          </Link>
+          </a>
           <span className="text-base mt-2">©</span>
         </span>
 
         <nav className="flex flex-col gap-3 text-base text-[#767676] font-medium">
-          {[
-            { href: PAGE_NAME.home, label: "Home" },
-            { href: PAGE_NAME.experience, label: "Experience" },
-            { href: PAGE_NAME.project, label: "Project" },
-            { href: PAGE_NAME.contact, label: "Contact" },
-            { href: PAGE_NAME.about, label: "About" },
-          ].map(({ href, label }) => (
-            <Link
+          {navigationItems.map(({ href, label, id }) => (
+            <a
               key={label}
               href={href}
               onClick={onClose}
-              className="transition-colors hover:text-[#1F2937]"
+              className={`relative w-fit pr-4 transition-all duration-300 hover:text-[#1F2937] ${
+                activeSection === id
+                  ? "text-[#1F2937]"
+                  : "text-[#767676]"
+              }`}
+              aria-current={activeSection === id ? "page" : undefined}
             >
+              <span
+                className={`absolute -left-4 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#fb923c] transition-all duration-300 ${
+                  activeSection === id
+                    ? "scale-100 opacity-100"
+                    : "scale-0 opacity-0"
+                }`}
+              />
               {label}
-            </Link>
+            </a>
           ))}
         </nav>
 
