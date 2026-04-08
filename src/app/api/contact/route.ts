@@ -1,10 +1,10 @@
-import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { contactSchema } from "@varel-web/lib/contact-schema";
 
 export async function POST(req: Request) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
+    const appsScriptUrl =
+      "https://script.google.com/macros/s/AKfycbyz4VMIGBywxf_p5ul34a2LAHd6toHpFjrbZhM4wdwriaV7zmSsk4hFyS66NLjNSg5x/exec";
     const body = await req.json();
 
     // Honeypot (anti-spam)
@@ -17,46 +17,53 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { success: false, errors: parsed.error.flatten().fieldErrors },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const { name, email, phone, topic, message } = parsed.data;
 
-    // 🚨 SEND EMAIL (CHECK RESULT)
-    const result = await resend.emails.send({
-      // ⚠️ PAKAI YANG PALING AMAN
-      from: "Contact <hello@varel.dev>",
-      to: process.env.CONTACT_RECEIVER_EMAIL!,
-      replyTo: email,
-      subject: topic || "New Portfolio Contact",
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone || "-"}
-
-        Message:
-        ${message}
-      `,
-    });
-
-    // 🚨 RESEND ERROR HANDLING
-    if (result.error) {
-      console.error("RESEND ERROR:", result.error);
+    if (!appsScriptUrl) {
+      console.error("GOOGLE APPS SCRIPT URL is missing");
       return NextResponse.json(
-        { success: false, error: "Email delivery failed" },
-        { status: 500 }
+        { success: false, error: "Contact service is not configured" },
+        { status: 500 },
       );
     }
 
-    console.log("EMAIL SENT:", result.data);
+    const response = await fetch(appsScriptUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone: phone || "-",
+        topic: topic || "New Portfolio Contact",
+        message,
+      }),
+      cache: "no-store",
+    });
+
+    const rawResponse = await response.text();
+
+    if (!response.ok) {
+      console.error("GOOGLE APPS SCRIPT ERROR:", rawResponse);
+      return NextResponse.json(
+        { success: false, error: "Message delivery failed" },
+        { status: 500 },
+      );
+    }
+
+    console.log("GOOGLE APPS SCRIPT SUCCESS:", rawResponse);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("CONTACT API ERROR:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
