@@ -7,6 +7,17 @@ import {
   FaLinkedin,
 } from "react-icons/fa6";
 
+const SOCIAL_LINKS = {
+  twitter: process.env.LINK_TWITTER ?? "https://x.com/varell_caesar",
+  instagram: process.env.LINK_INSTAGRAM ?? "https://www.instagram.com/varellcaesar",
+  discord:
+    process.env.LINK_DISCORD ??
+    "https://discordapp.com/users/528409195230396416",
+  linkedin:
+    process.env.LINK_LINKEDIN ??
+    "https://www.linkedin.com/in/varelandito-caesar-wahyu-5a125017b/",
+};
+
 const HomePage = () => {
   const socialLinksData: Array<{
     href?: string;
@@ -14,22 +25,22 @@ const HomePage = () => {
     icon: ReactNode;
   }> = [
     {
-      href: process.env.LINK_TWITTER,
+      href: SOCIAL_LINKS.twitter,
       label: "X / Twitter",
       icon: <FaXTwitter />,
     },
     {
-      href: process.env.LINK_INSTAGRAM,
+      href: SOCIAL_LINKS.instagram,
       label: "Instagram",
       icon: <FaInstagram />,
     },
     {
-      href: process.env.LINK_DISCORD,
+      href: SOCIAL_LINKS.discord,
       label: "Discord",
       icon: <FaDiscord />,
     },
     {
-      href: process.env.LINK_LINKEDIN,
+      href: SOCIAL_LINKS.linkedin,
       label: "LinkedIn",
       icon: <FaLinkedin />,
     },
