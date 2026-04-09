@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import HomePage from "@varel-web/app/pages/home/page";
 import AboutPage from "@varel-web/app/pages/about/page";
 import ProjectPage from "@varel-web/app/pages/project/page";
 import ContactPage from "@varel-web/app/pages/contact/page";
 import ExperiencePage from "@varel-web/app/pages/experience/page";
+import { createMetadata } from "@varel-web/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "Software Engineer Portfolio",
+  description:
+    "Explore the portfolio of Varelandito Caesar Wahyu, a Jakarta-based software engineer building web and mobile products with product thinking, clean systems, and reliable execution.",
+  path: "/",
+});
 
 export default function RootPage() {
   const sectionClassName =
